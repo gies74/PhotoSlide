@@ -21,8 +21,7 @@ namespace PhotoSlide
         Timer _timer = new Timer();
 
         const int INTERVAL = 10; // seconden
-        const string PORTRET  = @"C:\Data\Prive\Gerda\DSC_9321.JPG";
-        const string PORTRET_DBG  = @"C:\Data\Prive\Gerda\DSC_6285.JPG";
+        const string PORTRET  = @"DSC_9321.JPG";
         const string DEFAULT_DIRECTORY = @"C:\Data\Prive\Gerda";
 
 
@@ -50,14 +49,13 @@ namespace PhotoSlide
             do
             {
                 _nameIdx = (_nameIdx + 1) % _names.Count;
-            } while (_names[_nameIdx] == PORTRET);
+            } while (_names[_nameIdx] == textBox2.Text);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             _timer.Stop();
-            string s = (File.Exists(PORTRET)) ? PORTRET : _names[0];
-            ShowImage(s);
+            ShowImage(textBox2.Text);
         }
 
         private void ShowImage(string imgpath)
@@ -87,6 +85,21 @@ namespace PhotoSlide
             }
             textBox1.Text = folderBrowserDialog1.SelectedPath;
             _names = LoadRandomPaths();
+            openFileDialog1.Filter = "JPG|*.jpg";
+            openFileDialog1.InitialDirectory = textBox1.Text;
+            string d = Path.Combine(textBox1.Text, PORTRET);
+            if (!File.Exists(d)) {
+                if (_names.Count > 0)
+                {
+                    d = _names[0];
+                } else
+                {
+                    openFileDialog1.FileName = "";
+                    button4_Click(null, null);
+                    return;
+                }
+            }
+            openFileDialog1.FileName = textBox2.Text = d;
         }
 
         private List<string> LoadRandomPaths()
@@ -112,6 +125,14 @@ namespace PhotoSlide
             }
             textBox1.Text = folderBrowserDialog1.SelectedPath;
             _names = LoadRandomPaths();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+            textBox2.Text = openFileDialog1.FileName;
         }
     }
 }

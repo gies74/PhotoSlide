@@ -33,6 +33,13 @@ namespace PhotoSlide
             if (String.IsNullOrEmpty(_currentPath)) {
                 return;
             }
+            if (this.pictureBox1.Image != null)
+            {
+                this.pictureBox1.Image.Dispose();
+                this.pictureBox1.Image = null;
+                GC.Collect();
+            }
+
             
             int width = this.pictureBox1.Width;
             int height = this.pictureBox1.Height;
