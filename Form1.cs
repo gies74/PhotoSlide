@@ -85,7 +85,7 @@ namespace PhotoSlide
             }
             textBox1.Text = folderBrowserDialog1.SelectedPath;
             _names = LoadRandomPaths();
-            openFileDialog1.Filter = "JPG|*.jpg";
+            openFileDialog1.Filter = "JPG|*.jpg;*.jpeg";
             openFileDialog1.InitialDirectory = textBox1.Text;
             string d = Path.Combine(textBox1.Text, PORTRET);
             if (!File.Exists(d)) {
@@ -105,7 +105,7 @@ namespace PhotoSlide
         private List<string> LoadRandomPaths()
         {
             DirectoryInfo di = new DirectoryInfo(folderBrowserDialog1.SelectedPath);
-            var names = di.GetFiles("*.jpg").Select(fi => fi.FullName).ToList();
+            var names = di.GetFiles("*.*").Select(fi => fi.FullName).ToList();
             names.Shuffle();
             return names;
         }
