@@ -19,8 +19,9 @@ namespace PhotoSlide
         List<string> _names = null;
         int _nameIdx = 0;
         Timer _timer = new Timer();
+        bool _playing = false;
 
-        const int INTERVAL = 10; // seconden
+        const int INTERVAL = 6; // seconden
         const string PORTRET  = @"DSC_9321.JPG";
         const string DEFAULT_DIRECTORY = @"C:\Data\Prive\Gerda";
 
@@ -54,6 +55,8 @@ namespace PhotoSlide
 
         private void button1_Click(object sender, EventArgs e)
         {
+            _playing = false;
+            button2.BackColor = Color.Red;
             _timer.Stop();
             ShowImage(textBox2.Text);
         }
@@ -112,9 +115,18 @@ namespace PhotoSlide
 
         private void button2_Click(object sender, EventArgs e)
         {
+            _playing = !_playing;
             _timer.Stop();
-            _timer.Start();
-            _timer_Tick(null, null);
+            if (_playing)
+            {
+                _timer.Start();
+                _timer_Tick(null, null);
+                this.button2.BackColor = Color.Green;
+            } else
+            {
+                _nameIdx = (_nameIdx + _names.Count - 1) % _names.Count;
+                this.button2.BackColor = Color.Red;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -133,6 +145,17 @@ namespace PhotoSlide
                 return;
             }
             textBox2.Text = openFileDialog1.FileName;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            _nameIdx = (_nameIdx + _names.Count - 2) % _names.Count;
+            _timer_Tick(null, null);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            _timer_Tick(null, null);
         }
     }
 }

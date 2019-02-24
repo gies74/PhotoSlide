@@ -37,6 +37,8 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -58,12 +60,13 @@
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.BackColor = System.Drawing.Color.Red;
             this.button2.Location = new System.Drawing.Point(478, 31);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(447, 385);
+            this.button2.Size = new System.Drawing.Size(447, 355);
             this.button2.TabIndex = 0;
             this.button2.Text = "Diashow";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox1
@@ -112,11 +115,33 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(478, 392);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(218, 23);
+            this.button5.TabIndex = 3;
+            this.button5.Text = "<";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(707, 392);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(218, 23);
+            this.button6.TabIndex = 4;
+            this.button6.Text = ">";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(942, 459);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox2);
@@ -141,6 +166,8 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
     }
 }
 

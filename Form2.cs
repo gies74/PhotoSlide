@@ -43,45 +43,47 @@ namespace PhotoSlide
             
             int width = this.pictureBox1.Width;
             int height = this.pictureBox1.Height;
-            var image = Image.FromFile(_currentPath);
-            image.ExifRotate();
-            var iW = image.Width;
-            var iH = image.Height;
-            double factor = 0;
-            if ((double)iW / iH > Convert.ToDouble(width) / height)
+            using (var image = Image.FromFile(_currentPath))
             {
-                factor = Convert.ToDouble(width) / iW;
-            }
-            else
-            {
-                factor = Convert.ToDouble(height) / iH;
-            }
-            factor = Math.Min(factor, 1D);
-            var tgtWidth = Convert.ToInt32(factor * iW);
-            var tgtHeight = Convert.ToInt32(factor * iH);
-            var bgRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
-
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using (var wrapMode = new ImageAttributes())
+                image.ExifRotate();
+                var iW = image.Width;
+                var iH = image.Height;
+                double factor = 0;
+                if ((double)iW / iH > Convert.ToDouble(width) / height)
                 {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.FillRectangle(Brushes.Black, bgRect);
-                    var destRect = new Rectangle(Convert.ToInt32(Convert.ToDouble(width - tgtWidth) / 2), Convert.ToInt32(Convert.ToDouble(height - tgtHeight) / 2), tgtWidth, tgtHeight);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                    factor = Convert.ToDouble(width) / iW;
                 }
-            }
+                else
+                {
+                    factor = Convert.ToDouble(height) / iH;
+                }
+                factor = Math.Min(factor, 1D);
+                var tgtWidth = Convert.ToInt32(factor * iW);
+                var tgtHeight = Convert.ToInt32(factor * iH);
+                var bgRect = new Rectangle(0, 0, width, height);
+                var destImage = new Bitmap(width, height);
 
-            this.pictureBox1.Image = destImage;
+                destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+                using (var graphics = Graphics.FromImage(destImage))
+                {
+                    graphics.CompositingMode = CompositingMode.SourceCopy;
+                    graphics.CompositingQuality = CompositingQuality.HighQuality;
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphics.SmoothingMode = SmoothingMode.HighQuality;
+                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                    using (var wrapMode = new ImageAttributes())
+                    {
+                        wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                        graphics.FillRectangle(Brushes.Black, bgRect);
+                        var destRect = new Rectangle(Convert.ToInt32(Convert.ToDouble(width - tgtWidth) / 2), Convert.ToInt32(Convert.ToDouble(height - tgtHeight) / 2), tgtWidth, tgtHeight);
+                        graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                    }
+                }
+
+                this.pictureBox1.Image = destImage;
+            }
             this.label1.Text = _currentPath;
         }
 
